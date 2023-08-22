@@ -28,8 +28,12 @@
                 deferRender: true,
                 "scrollX": true,
                 columns: [
-                    { data: 'Gene_ID' },
-                    { data: 'Gene_Names' },
+                    {
+                        data: 'gene_name',
+                        createdCell: function (td, cellData, rowData, row, col) {
+                            $(td).html(`<a href="https://www.ncbi.nlm.nih.gov/gene/?term=${cellData}" target="_blank">${cellData}</a>`);
+                        }
+                    },
                     { data: 'krt4' },
                     { data: 'tp63' }
                 ],
@@ -58,22 +62,46 @@
 </head>
 
 <body>
-    <header class="bg-primary text-white text-center py-4">
-        <h1>Web Page</h1>
-    </header>
+    <!-- <header class="bg-primary text-white text-center py-4"> -->
+        <!-- <h1>Web Page</h1> -->
+    <!-- </header> -->
 
-    <div class="container">
+    <div class="container py-5">
         <div class="row">
             <div class="col">
+                <h2>
+                    Gene Expression in 3dpi Zebrafish Epithelial Cells
+                </h2>
                 <p>
-                    Information about the page goes here.
+                    <a href="https://zfin.org/ZDB-TGCONSTRCT-180706-6" target="_blank">Tg3(krt4:GFP)</a>
+                    and Tg(tp63:Tol2-Tp63-AcGFP) at 3 day post-fertilization were dissociated in to single
+                    cell and , then FACS sorted to collect envelope and basal epithelial cells. Total RNA was extracted
+                    and ultra-low input RNA seq with polyA enrichment was performed at the Medical Genomics Core at
+                    Indiana University.
                 </p>
-
+                <p>
+                    Reads were mapped to GRCz11 using STAR
+                    (<a href="https://elifesciences.org/articles/55792#bib9" target="_blank">Dobin et al., 2013</a>)
+                    with default parameters to generate BAM
+                    files, which were subsequently used for transcript quantification with RSEM
+                    (<a href="https://elifesciences.org/articles/55792#bib29" target="_blank">Li and Dewey, 2011</a>)
+                    using Lawson Lab Transcriptome Annotation file, V4.3.2
+                    (<a href="https://doi.org/10.1038/s41586-020-2746-2" target="_blank">Lawson et al., 2020</a>)
+                    Expression values
+                    showed in datasheet are average FPKM counts of three biological repeats and normalized on a log10
+                    scale.
+                </p>
+                <h2>
+                    User Guide
+                </h2>
+                <p>
+                    Transcripts that were undetected were assigned an arbitrary value of -4.00. Data may be searched by
+                    symbol, Gene Name and sorted by any column.
+                </p>
                 <table id="myTable" class="table table-bordered display" style="width:100%">
                     <thead>
                         <tr>
-                            <th>Gene_Id</th>
-                            <th>Gene_Names</th>
+                            <th>Gene Names</th>
                             <th>Suprabasal layers of epithelial cells</th>
                             <th>Basal layers of epithelial cells</th>
                         </tr>
@@ -82,8 +110,7 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                            <th>Gene_Id</th>
-                            <th>Gene_Names</th>
+                            <th>Gene Names</th>
                             <th>Suprabasal layers of epithelial cells</th>
                             <th>Basal layers of epithelial cells</th>
                         </tr>
@@ -95,7 +122,7 @@
     </div>
 
     <footer class="bg-dark text-white text-center py-3">
-        <p>&copy; 2023 Web Page. All rights reserved.</p>
+        <p>All rights reserved by Dr. Qing Deng's lab.</p>
     </footer>
 </body>
 
